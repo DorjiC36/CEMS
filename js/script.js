@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('appUsers', JSON.stringify(users));
     }
 
-    // --- Event Data Utilities (Consistent Key) ---
-    window.EVENT_KEY = 'collegeEvents'; // Made global for access in other script blocks
-    window.REGISTRATION_KEY = 'registeredEvents'; // Made global for access in other script blocks
+    // --- Event Data Utilities (Consistent Keys - Made Global for Cross-File Access) ---
+    window.EVENT_KEY = 'collegeEvents'; 
+    window.REGISTRATION_KEY = 'registeredEvents';
 
     function getEvents() {
         const eventsJSON = localStorage.getItem(window.EVENT_KEY);
@@ -36,28 +36,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // --- II. GOOGLE/EMAIL/NOTIFICATION SIMULATION (NEW) ---
+    // --- II. GOOGLE/EMAIL/NOTIFICATION SIMULATION (CORE) ---
     // ----------------------------------------------------
 
-    // 📧 SIMULATION: This runs in the console. For a real app, replace with a backend API call.
+    // 📧 SIMULATION: This logs the action to the console (F12) instead of sending a real email.
     window.sendConfirmationEmail = function(recipientEmail, subject, body) {
         console.log(`[SIMULATION SUCCESS: GMAIL] Sent email to: ${recipientEmail}. Subject: ${subject}`);
         console.log(`Email Body Snippet: ${body.substring(0, 80)}...`);
-        // You can uncomment the alert if you prefer a persistent visual confirmation:
-        // alert(`SIMULATION: Email sent to ${recipientEmail} for subject: ${subject}`);
     }
 
-    // 🗓️ SIMULATION: This runs in the console. For a real app, replace with a backend API call.
+    // 🗓️ SIMULATION: This logs the action to the console (F12) instead of hitting Google Calendar API.
     window.addEventToCalendar = function(eventTitle, date, time, email) {
         console.log(`[SIMULATION SUCCESS: GOOGLE CALENDAR] Added event for ${email}`);
         console.log(`Event: ${eventTitle} on ${date} at ${time}`);
     }
 
-    // 🔔 WEB NOTIFICATION API
+    // 🔔 WEB NOTIFICATION API (Real Browser Pop-up, requires user permission)
     function requestNotificationPermission() {
         if (!("Notification" in window)) {
             console.log("Browser does not support desktop notification");
         } else if (Notification.permission !== "denied") {
+            // Request permission only if it hasn't been denied
             Notification.requestPermission();
         }
     }
@@ -72,10 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --------------------------
-    // --- III. SIGN UP LOGIC (UPDATED) ----
+    // --- III. SIGN UP LOGIC ----
     // --------------------------
     const signupForm = document.getElementById('signup-form');
-    // ...
+    // REMOVED: const googleSignupBtn = document.getElementById('google-signup-btn');
 
     if (signupForm) {
         signupForm.addEventListener('submit', function (e) {
@@ -97,7 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            users.push({ fullName, email, password, isGoogle: false, role: "user" });
+            // NOTE: isGoogle is always false since manual sign-up is the only option
+            users.push({ fullName, email, password, isGoogle: false, role: "user" }); 
             saveUsers(users);
 
             // 📧 Simulate Welcome Email
@@ -111,9 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html';
         });
     }
-    
-    // ... (rest of the signup and login logic is unchanged from the last full script) ...
 
+    // REMOVED: Google sign-up button listener logic here.
+
+    // --------------------------
+    // --- IV. LOGIN LOGIC -----
+    // --------------------------
     const loginForm = document.querySelector('.login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', function (e) {
@@ -145,22 +148,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // --- IV. ADMIN LOGIC HOOK (For Admin Page) ---
+    // --- V. ADMIN EVENT CREATION HOOK ---
     // ----------------------------------------------------
-    // This function must be called from your admin.html when an event is saved/created.
+    // This is the function your admin.html must call upon saving a new event.
     window.handleAdminEventSave = function(eventData) {
         const events = getEvents();
+        // Ensure eventData includes date, title, etc., and assign a unique ID
         const newEvent = { ...eventData, _id: Date.now().toString() }; 
         events.push(newEvent);
         saveEvents(events);
         
         // 📧 Notify all users about the new event
         getUsers().forEach(user => {
-            if(user.role === 'user') { // Only notify general users
+            if(user.role === 'user') {
                 window.sendConfirmationEmail(
                     user.email,
                     `📢 New Event Added: ${newEvent.title}`,
-                    `Dear ${user.fullName || 'User'},\n\nA new event, "${newEvent.title}", has been added to the college calendar. Check the app for details and registration!`
+                    `Dear ${user.fullName || 'User'},\n\nA new event, "${newEvent.title}", has been added to the college calendar. Date: ${newEvent.date}`
                 );
             }
         });
@@ -171,30 +175,36 @@ document.addEventListener('DOMContentLoaded', () => {
             `A new event has been scheduled for ${newEvent.date}. Check the notice board!`
         );
         
-        alert(`Event "${newEvent.title}" saved successfully! (Check console for email/notification log)`);
-        
-        // Return true/false if needed for admin page logic
+        console.log(`Event "${newEvent.title}" saved. Check console for email/notification log.`);
         return true; 
     }
 
 
     // --------------------------------------------------
-    // --- V. DYNAMIC EVENT RENDERING (UNCHANGED) ---
+    // --- VI. DYNAMIC EVENT RENDERING ---
     // --------------------------------------------------
     const path = window.location.pathname;
-    
-    // Helper function to render events for specific categories (unchanged)
+
     function renderUpcomingEvents(category) {
-        // ... (function body is the same) ...
+        // ... (Function body omitted for brevity, logic remains the same) ...
+        const events = getEvents();
+        const container = document.getElementById('eventsContainer'); 
+        
+        const today = new Date().toISOString().split('T')[0];
+        const filteredEvents = events.filter(event => 
+            event.category === category && event.date >= today
+        );
+        
+        if (!container) return;
+        // ... (Rest of rendering logic)
     }
 
-    // Check page path and run appropriate rendering
+    // Ensure notification permission is requested when navigating to event pages
     if (path.includes('events_academic.html') || path.includes('events_sports_games.html') || path.includes('events_cultural.html')) {
-        requestNotificationPermission(); // Ensure permission is requested on event pages
+        requestNotificationPermission(); 
         if (path.includes('events_academic.html')) renderUpcomingEvents('Academic');
         else if (path.includes('events_sports_games.html')) renderUpcomingEvents('Sports & Games');
         else if (path.includes('events_cultural.html')) renderUpcomingEvents('Cultural');
     }
-    // Note: The role selection logic (IV) is omitted here for brevity but is in your full script.js file.
     
 });

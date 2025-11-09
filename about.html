@@ -1,74 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+               
+           
+       
     <meta charset="UTF-8">
+               
+           
+       
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About SCE Digital Notice Board</title>
+                <title>About SCE Digital Notice Board</title>
+               
+           
+       
     <link rel="stylesheet" href="css/style.css">
+               
+           
+       
     <link rel="icon" href="assets/logo.png" type="image/x-icon">
-    <style>
+                <style>
+        body {
+            /* Ensures body fills the viewport when content is short */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            background-color: #f7f8fc;
+            font-family: Arial, sans-serif;
+        }
+
+        /* --- HEADER STYLES COPIED FROM PRIVACY.HTML --- */
+        .header {
+            background-color: #4a5c9a;
+            /* Blue background */
+            color: white;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            /* Needed for absolute positioning of back arrow */
+        }
+
+        .header-title {
+            margin: 0 auto;
+            /* Center the title */
+            font-size: 1.8rem;
+            flex-grow: 1;
+            text-align: center;
+            padding-left: 50px;
+            /* Space for the back arrow */
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            z-index: 10;
+        }
+
+        /* --- END HEADER STYLES --- */
+
+
         .content-container {
             max-width: 900px;
             margin: 20px auto;
             padding: 30px;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            /* Allows container to push the footer down */
         }
+
         .content-container h2 {
             color: #4a5c9a;
             margin-bottom: 15px;
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 5px;
         }
+
         .content-container p {
             margin-bottom: 15px;
             text-align: justify;
         }
+
         .content-container ul {
             margin-bottom: 15px;
             padding-left: 20px;
         }
+
+        /* --- NEW TEAM SECTION STYLES --- */
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            padding: 20px 0;
+            background-color: #f7f9ff;
+            border-radius: 8px;
+            border: 1px solid #e0e6f0;
+        }
+
+        .team-member {
+            text-align: center;
+            width: 150px;
+
+        }
+
+        .team-member-photo {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 50%;
+            /* Makes the image circular */
+            margin: 0 auto 10px;
+            border: 4px solid #4a5c9a;
+            /* SCE primary color border */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures the image covers the circle without distortion */
+        }
+
+        .team-member p {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        /* Specific header/logo sizing for this page - 135PX */
+        .header-logo img {
+            width: 135px;
+            height: 135px;
+            border-radius: 4px;
+        }
+
+        /* Footer styles are assumed to be in style.css or copied here if needed */
     </style>
 </head>
+
 <body>
-    <header class="header">
-        <h1 class="header-title">About Our Digital Notice Board</h1>
+ <header class="header">
+        <a href="index.html" class="back-arrow" title="Back to Home">&#8592;</a>
+         <h1 class="header-title">About Our Digital Notice Board</h1>
         <div class="header-logo">
-            <img src="assets/logo.png" alt="SCE Logo">
-        </div>
+           <img src="assets/SCE-LOGO.jpg" alt="SCE Logo" 
+                style="width: 135px; height: 135px; object-fit: cover;">
+           </div>
+        
     </header>
 
     <main class="content-container">
         <h2>Our Mission</h2>
-        <p>The SCE Digital Notice Board is designed to be the central hub for all academic, cultural, and sports activities within Samtse College of Education. Our primary mission is to streamline event communication, making it easier for students, faculty, and staff to stay informed, register for events, and manage their schedules effectively.</p>
+        <p>The SCE Digital Notice Board is designed to be the central hub for all academic, cultural,and sports activities within Samtse College of Education. Our primary mission is to streamline event communication, making it easier for students, faculty, and staff to stay informed, register for
+            events, and manage their schedules effectively.</p>
 
         <h2>Key Features</h2>
         <p>We provide a unified platform to manage the diverse range of events at SCE:</p>
-        <ul>
-            <li>Centralized Event Listings: Filter and view events across three main categories: Academic, Sports & Games, and Cultural.</li>
-            <li>Effortless Registration: Quick sign-up for any event with instant confirmation.</li>
+        <ul> <li>Centralized Event Listings: Filter and view events across three main categories: Academic,Sports & Games, and Cultural.</li>
+    <li>Effortless Registration: Quick sign-up for any event with instant confirmation.
+            </li>
             <li>Smart Notifications: Integration with user calendars (via ICS file download) and email systems to ensure no event is missed.</li>
             <li>Admin Control: A dedicated panel for event organizers to post, manage, and communicate changes instantly.</li>
         </ul>
 
-        <h2>Commitment to the Community</h2>
-        <p>This platform is built by and for the SCE community. We are committed to fostering a vibrant campus life by improving accessibility and engagement in all college initiatives. For technical support or feedback, please use the contact details provided in the footer.</p>
-        
-        <p style="text-align: center; margin-top: 30px;">— Developed by the SCE IT Team (Prototype 2025) —</p>
-    </main>
+       <h2>Meet the Developers </h2>
+                        <p style="text-align: center; margin-bottom: 20px;">This project was proudly developed by the dedicated students of the SCE IT (2025).</p>
 
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="about.html">About us</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <span>Academic • Sports & Games • Cultural</span>
-        </div>
-        <p>©2025 Samtse College of Education</p>
-        <div class="contact-info">
-            <p>Contact us at: +975 77568876 | +975 17793887</p>
-            <p>Email: cte@admin@sce.rub.edu.bt</p>
-        </div>
-    </footer>
+                        <div class="team-grid">
+                                    <div class="team-member">
+                                                <div class="team-member-photo"><img src="assets/Dorji.jpg"              
+                                                          alt="Photo of Dorji Choden"></div>
+                                                <p>Dorji Choden</p>
+                                            </div>
+                                    <div class="team-member">
+                                                <div class="team-member-photo"><img src="assets/Cheki.jpg"              
+                                  alt="Photo of Cheki Uden">
+                                                        </div>
+                                            </div>
+                                    <div class="team-member">
+                                                <div class="team-member-photo"><img src="assets/Chimi.jpg"              
+                                                          alt="Photo of Chimi Wangmo"></div>
+                                            </div>
+                                    <div class="team-member">
+                                                <div class="team-member-photo"><img src="assets/DorjiK.jpg"            
+                                                            alt="Photo of Dorji Khandu"></div>
+                                            </div>
+                                    <div class="team-member">
+                                                <div class="team-member-photo"><img src="assets/DorjiW.jpg"            
+                                                            alt="Photo of Dorji Wangmo"></div>
+                                            </div>
+                                    <div class="team-member">
+                                                <div class="team-member-photo"><img src="assets/Dechen.jpg"            
+                                                            alt="Photo of Dechen Tshomo"></div>
+                                            </div>
+                                </div>
+                        <h2>Commitment to the Community</h2>
+                         <p>This platform is built by and for the SCE community. We are committed to fostering a vibrant campus life by improving accessibility and engagement in all college initiatives. For technical support or feedback, please use the contact details provided in the footer.</p>
+                       
+                         <p style="text-align: center; margin-top: 30px;">-Developed by the SCE IT Students (2025)-</p>
+                       
+                    </main>
+
+           <footer class="footer">
+                         <div class="footer-links">
+                                    <a href="about.html">About us</a>
+                                     <a href="privacy.html">Privacy Policy</a>
+                                    <span>Academic • Sports & Games • Cultural</span>
+                                     </div>
+                         <p>©2025 Samtse College of Education</p>
+                         <div class="contact-info">
+                                    <p>Contact us at: +975 77568876 | +975 17793887</p>
+                                     <p>Email: cte@admin@sce.rub.edu.bt</p>
+                                     </div>
+                        </footer>
+           
+    <script src="js/script.js"></script>
 </body>
+
 </html>

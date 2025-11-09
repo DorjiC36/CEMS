@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCE Digital Notice Board - Sign Up</title>
 
+<head>
+       
+    <meta charset="UTF-8">
+       
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SCE Digital Notice Board - Sign Up</title>
+
+       
     <link rel="stylesheet" href="css/style.css">
+       
     <link rel="icon" href="assets/logo.png" type="image/x-icon">
 
-    <style>
+        <style>
         .signup-container {
             display: flex;
-            flex-grow: 1; 
+            flex-grow: 1;
             padding: 50px 5%;
             max-width: 1200px;
             margin: 0 auto;
@@ -21,7 +26,7 @@
 
         .signup-image {
             flex: 2;
-            background-color: #e0e0e0; 
+            background-color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -79,6 +84,7 @@
             background-color: #555;
         }
 
+        /* The following styles for .google-signup-btn are now redundant but kept for style consistency */
         .google-signup-btn {
             display: flex;
             align-items: center;
@@ -122,7 +128,8 @@
         }
 
         .header-logo img {
-            width: 60px;      /* Adjust as needed */
+            width: 60px;
+            /* Adjust as needed */
             height: auto;
             border-radius: 4px;
         }
@@ -158,7 +165,8 @@
             gap: 5px;
             margin-bottom: 10px;
         }
-    .footer-links a {
+
+        .footer-links a {
             color: #dcdcdc;
             text-decoration: none;
         }
@@ -175,64 +183,62 @@
 </head>
 
 <body>
-    <header class="header">
-        <a href="index.html" style="color: white; text-decoration: none; font-size: 1.5rem;">&larr;</a>
-        <h1 class="header-title" style="flex-grow: 1; text-align: center;">Sign Up</h1>
-        <div class="header-logo">
-            <img src="assets/SCE-LOGO.jpg" alt="Samtse College of Education Logo">
-        </div>
-    </header>
+        <header class="header">
+                <a href="index.html" style="color: white; text-decoration: none; font-size: 1.5rem;">&larr;</a>
+                <h1 class="header-title" style="flex-grow: 1; text-align: center;">Sign Up</h1>
+                <div class="header-logo">
+                        <img src="assets/SCE-LOGO.jpg" alt="Samtse College of Education Logo">
+                    </div>
+            </header>
 
-    <main class="signup-container">
-        <div class="signup-image">
-            <img src="assets/typing.jpeg" alt="Person typing on a laptop">
-        </div>
-        
-        <div class="signup-form-card">
-            <h2>Sign Up</h2>
-            <form id="signup-form">
-                <div class="input-group">
-                    <input type="text" id="signup-full-name" placeholder="Full Name" required>
-                </div>
-                <div class="input-group">
-                    <input type="email" id="signup-email" placeholder="Email Address" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="signup-password" placeholder="Password" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required>
-                </div>
-                
-                <button type="submit" class="btn-signup-dark">Sign Up</button>
-            </form>
-            
-            <p style="text-align: center; margin: 10px 0;">OR</p>
-            
-            <button id="google-signup-btn" class="google-signup-btn" type="button">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google logo">
-                Sign up with Google
-            </button>
+        <main class="signup-container">
+                <div class="signup-image">
+                        <img src="assets/typing.jpeg" alt="Person typing on a laptop">
+                    </div>
+               
+                <div class="signup-form-card">
+                        <h2>Sign Up</h2>
+                        <form id="signup-form">
+                                <div class="input-group">
+                                        <input type="text" id="signup-full-name" placeholder="Full Name" required>
+                                    </div>
+                                <div class="input-group">
+                                        <input type="email" id="signup-email" placeholder="Email Address" required>
+                                    </div>
+                                <div class="input-group">
+                                        <input type="password" id="signup-password" placeholder="Password" required>
+                                    </div>
+                                <div class="input-group">
+                                        <input type="password" id="signup-confirm-password"
+                        placeholder="Confirm Password" required>
+                                    </div>
+                               
+                                <button type="submit" class="btn-signup-dark">Sign Up</button>
+                            </form>
+                       
+                       
+                        <p class="login-link-text">
+                                Already have an account? <a href="index.html"
+                    style="color: #4a5c9a; font-weight: bold;">Log in</a>
+                            </p>
+                    </div>
+            </main>
 
-            <p class="login-link-text">
-                Already have an account? <a href="index.html" style="color: #4a5c9a; font-weight: bold;">Log in</a>
-            </p>
-        </div>
-    </main>
+        <footer class="footer">
+                <div class="footer-links">
+                        <a href="about.html">About us</a>
+                        <a href="privacy.html">Privacy Policy</a>
+                        <span>Academic • Sports & Games • Cultural</span>
+                    </div>
+                <p>©2025 Samtse College of Education</p>
+                <div class="contact-info">
+                        <p>Contact us at: +975 77568876 | +975 17793887</p>
+                        <p>Email: cte@admin@sce.rub.edu.bt</p>
+                    </div>
+            </footer>
 
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="about.html">About us</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <span>Academic • Sports & Games • Cultural</span>
-        </div>
-        <p>©2025 Samtse College of Education</p>
-        <div class="contact-info">
-            <p>Contact us at: +975 77568876 | +975 17793887</p>
-            <p>Email: cte@admin@sce.rub.edu.bt</p>
-        </div>
-    </footer>
-
+       
     <script src="js/script.js"></script>
 </body>
+
 </html>

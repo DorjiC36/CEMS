@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+       
     <meta charset="UTF-8">
+       
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCE Digital Notice Board - Login</title>
+        <title>SCE Digital Notice Board - Login</title>
+       
     <link rel="icon" href="assets/logo.png" type="image/x-icon">
 
-    <style>
+        <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -163,77 +167,63 @@
             .login-image img {
                 height: 250px;
             }
-        .login-card {
+
+            .login-card {
                 padding: 40px;
             }
         }
     </style>
 </head>
+
 <body>
-    <header class="header">
-        <h1 class="header-title">SCE Digital Notice Board</h1>
-        <div class="header-logo">
-            <img src="assets/SCE-LOGO.jpg" alt="Samtse College of Education Logo">
-        </div>
-    </header>
+     <header class="header">
+         <h1 class="header-title">SCE Digital Notice Board</h1>
+         <div class="header-logo">
+           <img src="assets/SCE-LOGO.jpg" alt="Samtse College of Education Logo">
+            </div>
+         </header>
 
-    <main class="login-container">
-        <div class="login-image">
-            <img src="assets/scehsll.jpg" alt="College event gathering">
-        </div>
-        
-        <div class="login-card">
-            <h2>WELCOME</h2>
-            <form class="login-form" onsubmit="return handleLogin(event)">
-    <div class="input-group">
-        <label for="email">E-mail Address</label>
-        <input type="email" id="email" name="email" placeholder="name@sce.edu.bt" required>
-    </div>
-    <div class="input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="********" required>
-    </div>
-    
-    <button type="submit" class="btn-primary">Login</button>
-    
-</form>
+     <main class="login-container">
+         <div class="login-image">
+             <img src="assets/scehsll.jpg" alt="College event gathering">
+             </div>
+         <div class="login-card">
+             <h2>WELCOME</h2>
+            <form class="login-form">
+               <div class="input-group">
+                    <label for="email">E-mail Address</label>
+                     <input type="email" id="email" name="email" placeholder="name@sce.edu.bt" required>
+                     </div>
+                 <div class="input-group">
+                     <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="********" required>
+                     </div>
+                
+                <button type="submit" class="btn-primary">Login</button>
+                
+            </form>
             
-            <p class="signup-text">
-                Not a Member yet? 
-                <a href="signup.html" class="btn-secondary">Sign-up</a> 
-            </p>
-        </div>
-    </main>
+             <p class="signup-text">
+                 Not a Member yet?
+                 <a href="signup.html" class="btn-secondary">Sign-up</a>
+                 </p>
+            </div>
+         </main>
 
-    <footer class="footer">
+     <footer class="footer">
         <div class="footer-links">
-            <a href="about.html">About us</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <span>Academic • Sports & Games • Cultural</span>
-        </div>
-        <p>©2025 Samtse College of Education</p>
-        <div class="contact-info">
-            <p>Contact us at: +975 77568876 | +975 17793887</p>
-            <p>Email: cte@admin@sce.rub.edu.bt</p>
-        </div>
-    </footer>
-    <script>
-function handleLogin(event) {
-    event.preventDefault(); // Prevent actual form submission
-
-    // You can later replace this with real login validation
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    if (email && password) {
-        // Simulate a successful login
-        alert("Login successful!");
-        window.location.href = "select_role.html"; // Redirects to the Role Selection page
-    } else {
-        alert("Please enter both email and password.");
-    }
-    return false;
-}
-</script>
+             <a href="about.html">About us</a>
+             <a href="privacy.html">Privacy Policy</a>
+             <span>Academic • Sports & Games • Cultural</span>
+             </div>
+         <p>©2025 Samtse College of Education</p>
+         <div class="contact-info">
+             <p>Contact us at: +975 77568876 | +975 17793887</p>
+             <p>Email: cte@admin@sce.rub.edu.bt</p>
+             </div>
+         </footer>
+    
+    <script src="js/script.js"></script>
 </body>
+
 </html>
