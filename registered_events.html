@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registered Events - SCE</title>
+  <link rel="icon" href="assets/logo.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #5c75d4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .container { padding: 40px; }
+    .event-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-left: 5px solid #ffb907; /* Highlight card */
+      position: relative; /* Needed for positioning the delete button */
+    }
+    .event-card p { margin: 5px 0; }
+    .event-card strong { color: #333; }
+    .event-card .title-line { 
+        font-size: 1.1rem;
+        color: #5c75d4;
+        font-weight: bold;
+        border-bottom: 1px dashed #ddd;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+    }
+    .no-events {
+      text-align: center;
+      color: #777;
+      font-size: 1.2rem;
+      margin-top: 40px;
+    }
+    /* New style for the cancel button */
+    .btn-cancel {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        position: absolute; /* Position relative to the card */
+        top: 15px;
+        right: 15px;
+        font-size: 0.9rem;
+        transition: background-color 0.2s;
+    }
+    .btn-cancel:hover {
+        background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="main_menu.html">&larr;</a>
+    <h1>Registered Events</h1>
+    <img src="assets/SCE-LOGO.jpg" alt="SCE Logo" height="45">
+  </header>
+
+  <main class="container">
+    <h2>Your Confirmed Registrations:</h2>
+    <div id="registeredContainer"></div>
+  </main>
+
+  <script>
+    const REGISTRATION_KEY = 'registeredEvents'; 
+    const container = document.getElementById('registeredContainer');
+
+    function renderRegisteredEvents() {
+        const registered = JSON.parse(localStorage.getItem(REGISTRATION_KEY) || '[]');
+
+        container.innerHTML = ''; // Clear existing content
+
+        if (registered.length === 0) {
+            container.innerHTML = '<p class="no-events">You haven\'t registered for any events yet.</p>';
+            return;
+        }
+
+        registered.forEach(r => {
+            const div = document.createElement('div');
+            div.className = 'event-card';
+
+            // Use both eventId and studentId (r.id) to uniquely identify the registration
+            // This is safer in case the same event has multiple people registered.
+            const uniqueKey = `${r.eventId}-${r.id}`;
+
+            div.innerHTML = `
+                <p class="title-line">${r.eventTitle}</p>
+                <p><strong>Date:</strong> ${r.eventDate}</p>
+                <p><strong>Registered As:</strong> ${r.name}</p>
+                <p><strong>Student ID:</strong> ${r.id}</p>
+                <p><strong>Course:</strong> ${r.course}</p>
+                <p style="font-size: 0.8em; color: #999;">Registration filed on: ${new Date(r.registrationDate).toLocaleDateString()}</p>
+                <button class="btn-cancel" onclick="cancelRegistration('${r.eventId}', '${r.id}')">Cancel Registration</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    /**
+     * Finds and removes a specific registration based on the Event ID and Student ID.
+     * @param {string} eventId - The unique ID of the event.
+     * @param {string} studentId - The unique ID of the student.
+     */
+    window.cancelRegistration = function(eventId, studentId) {
+        if (!confirm('Are you sure you want to cancel your registration for this event?')) {
+            return;
+        }
+
+        let registered = JSON.parse(localStorage.getItem(REGISTRATION_KEY) || '[]');
+
+        // Filter out the registration that matches both the Event ID and Student ID
+        const updatedRegistered = registered.filter(r => 
+            !(r.eventId.toString() === eventId.toString() && r.id.toString() === studentId.toString())
+        );
+
+        // Check if a registration was actually removed
+        if (updatedRegistered.length < registered.length) {
+            // Save the updated list back to Local Storage
+            localStorage.setItem(REGISTRATION_KEY, JSON.stringify(updatedRegistered));
+            alert('Registration successfully canceled!');
+            renderRegisteredEvents(); // Re-render the list immediately
+        } else {
+            alert('Error: Could not find or cancel registration.');
+        }
+    };
+
+    // Initial load
+    renderRegisteredEvents();
+  </script>
+</body>
+</html>

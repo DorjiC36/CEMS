@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Role - SCE</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/logo.png" type="image/x-icon">
+    <style>
+        /* Role Selection Container */
+        .role-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 50px 5%;
+            width: 100%;
+            min-height: calc(100vh - 160px); /* keeps footer at bottom */
+        }
+
+        .role-card-group {
+            background-color: #e0e0e0;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 40px;
+        }
+
+        .role-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            width: 200px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #ccc;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .role-card .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #4a5c9a;
+        }
+
+        .role-card p {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        /* Header styling */
+        .role-header {
+            background-color: #5c75d4;
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .role-header h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            flex-grow: 1;
+            margin: 0;
+        }
+
+        .header-logo img {
+            height: 30px;
+            width: auto;
+        }
+
+        /* Footer like index.html */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4a5c9a;
+            color: white;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #dcdcdc;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile adjustment */
+        @media (max-width: 600px) {
+            .role-card-group {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            .role-card {
+                width: 100%;
+            }
+            .header-logo img {
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="role-header">
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 1.5rem;">&larr;</a>
+        <h1>Select your role?</h1>
+        <div class="header-logo">
+            <img src="assets/SCE-LOGO.jpg" alt="SCE Logo">
+        </div>
+    </header>
+
+    <main class="role-container">
+        <div class="role-card-group">
+            
+            <!-- Admin Card -->
+            <div class="role-card" id="role-admin" onclick="window.location.href='admin.html'">
+                <img src="assets/admin.png" alt="Admin">
+                <p>Admin</p>
+            </div>
+            <!-- Student & Faculty Card -->
+            <div class="role-card" id="role-user" onclick="window.location.href='main_menu.html'">
+                <img src="assets/students.png" alt="Student & Faculty">
+                <p>Student & Faculty</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <span>Academic • Sports & Games • Cultural</span>
+        </div>
+        <p>©2025 Samtse College of Education</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

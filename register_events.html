@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register for Events - SCE</title>
+  <link rel="icon" href="assets/logo.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #5c75d4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      background-color: #5c75d4;
+      color: white;
+      padding: 12px;
+      border-radius: 6px;
+    }
+    .event-card {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .event-card:last-child {
+        border-bottom: none;
+    }
+    .event-details {
+        flex-grow: 1;
+    }
+    .event-details h3 {
+        margin: 0 0 5px 0;
+        color: #5c75d4;
+    }
+    .event-details p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    button {
+      background-color: #5c75d4;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+    button:hover { background-color: #4a61b1; }
+    .no-events { text-align: center; color: #777; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="main_menu.html">&larr;</a>
+    <h1>Registration</h1>
+    <img src="assets/SCE-LOGO.jpg" alt="SCE Logo" height="45">
+  </header>
+
+  <main>
+    <h2>Make your presence known</h2>
+    <div id="eventsList"></div>
+  </main>
+
+  <script>
+    // ⚠️ IMPORTANT: Use the correct key from admin.html and script.js
+    const EVENT_STORAGE_KEY = 'collegeEvents'; 
+    const listDiv = document.getElementById('eventsList');
+
+    function getEventsFromLocalStorage() {
+        const eventsJson = localStorage.getItem(EVENT_STORAGE_KEY);
+        return eventsJson ? JSON.parse(eventsJson) : [];
+    }
+
+    function renderEvents() {
+        const events = getEventsFromLocalStorage();
+        listDiv.innerHTML = ''; 
+
+        if (events.length === 0) {
+            listDiv.innerHTML = '<p class="no-events">No events added yet by the administrator.</p>';
+            return;
+        }
+
+        // Sort events by date
+        events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        events.forEach(event => {
+            const div = document.createElement('div');
+            div.className = 'event-card';
+            
+            // Display event details
+            div.innerHTML = `
+                <div class="event-details">
+                    <h3>${event.title} (${event.category})</h3>
+                    <p>📅 ${event.date} at ${event.time || 'N/A'} | 📍 ${event.venue}</p>
+                </div>
+                <button onclick="registerEvent(${event._id})">Register</button>
+            `;
+            listDiv.appendChild(div);
+        });
+    }
+
+    // Pass the unique ID to the registration form
+    window.registerEvent = function(eventId) {
+        // Save the ID of the selected event to Local Storage
+        localStorage.setItem('selectedEventId', eventId); 
+        window.location.href = 'registration_form.html';
+    };
+
+    renderEvents();
+  </script>
+</body>
+</html>

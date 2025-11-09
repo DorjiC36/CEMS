@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Menu - SCE</title>
+  <link rel="icon" href="assets/logo.png" type="image/x-icon">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background-color: #5c75d4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    /* Back Arrow Styling */
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.2s ease;
+    }
+
+    header a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    header img {
+      height: 45px;
+      width: auto;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .menu-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+      padding: 40px 80px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .menu-item:hover {
+      transform: translateX(8px);
+    }
+
+    .menu-item img.icon {
+      width: 45px;
+      height: 45px;
+    }
+
+    .menu-item span {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* ===== IMAGES SECTION ===== */
+    .menu-images {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .menu-images img {
+      width: 320px;
+      height: 200px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .menu-images img:hover {
+      transform: scale(1.03);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      color: #555;
+      border-top: 1px solid #ddd;
+      background-color: #f9f9f9;
+    }
+
+    @media (max-width: 768px) {
+      .menu-container {
+        padding: 20px;
+      }
+
+      .menu-item span {
+        font-size: 1.1rem;
+      }
+
+      .menu-images img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+
+    <a href="select_role.html">&larr;</a>
+    <h1>Main Menu</h1>
+    <img src="assets/SCE-LOGO.jpg" alt="SCE Logo">
+  </header>
+
+  <main class="menu-container">
+    <div class="menu-item" onclick="window.location.href='upcoming_events.html'">
+      <img src="assets/megaphone.png" alt="Upcoming Events" class="icon">
+      <span>View Upcoming Events</span>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='register_events.html'">
+      <img src="assets/events.jpg" alt="Register for Events" class="icon">
+      <span>Register for Events</span>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='registered_events.html'">
+      <img src="assets/registered.png" alt="Registered Events" class="icon">
+      <span>View Registered Events</span>
+    </div>
+
+    <div class="menu-images">
+      <img src="assets/academic.jpeg" alt="Workshop">
+      <img src="assets/culture.jpeg" alt="Cultural Program">
+      <img src="assets/sports.jpeg" alt="Sports Event">
+    </div>
+  </main>
+
+  <footer>
+    ©2025 Samtse College of Education <br>
+    Academic • Sports & Games • Cultural
+  </footer>
+</body>
+</html>

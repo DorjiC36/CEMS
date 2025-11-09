@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upcoming Events - SCE</title>
+  <link rel="icon" href="assets/logo.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #5c75d4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+    }
+    header h1 { font-size: 1.8rem; margin: 0; }
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-weight: bold;
+      padding: 5px 10px;
+    }
+    header a:hover { background-color: rgba(255,255,255,0.2); border-radius: 5px; }
+    .container { padding: 40px; }
+    .event-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .no-events {
+      text-align: center;
+      color: #777;
+      font-size: 1.2rem;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="main_menu.html">&larr;</a>
+    <h1>Upcoming Events</h1>
+    <img src="assets/SCE-LOGO.jpg" alt="SCE Logo" height="45">
+  </header>
+
+  <main class="container" id="eventsContainer"></main>
+
+  <script>
+    const container = document.getElementById('eventsContainer');
+    // ⚠️ IMPORTANT: Must match the key used in script.js and admin.html
+    const EVENT_STORAGE_KEY = 'collegeEvents'; 
+
+    /** Fetches events from Local Storage, returns an array. */
+    function getEventsFromLocalStorage() {
+        const eventsJson = localStorage.getItem(EVENT_STORAGE_KEY);
+        return eventsJson ? JSON.parse(eventsJson) : [];
+    }
+
+    async function loadEvents() {
+        // --- Now reading from Local Storage ---
+        const events = getEventsFromLocalStorage();
+        // ------------------------------------
+
+        container.innerHTML = ''; // clear container
+
+        if (events.length === 0) {
+            container.innerHTML = `<p class="no-events">No events added yet.</p>`;
+            return;
+        }
+
+        // Sort events by date
+        events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        events.forEach((event, i) => {
+            const div = document.createElement('div');
+            div.className = 'event-card';
+            div.innerHTML = `
+                <h2>${i + 1}. ${event.title} (${event.category})</h2>
+                <p><strong>Date:</strong> ${event.date} ${event.time ? 'at ' + event.time : ''}</p>
+                <p><strong>Venue:</strong> ${event.venue}</p>
+                <p>${event.description}</p>
+            `;
+            container.appendChild(div);
+        });
+
+    } 
+
+    // Load events when page loads
+    loadEvents();
+  </script>
+</body>
+</html>

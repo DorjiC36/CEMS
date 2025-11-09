@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCE Digital Notice Board - Sign Up</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/logo.png" type="image/x-icon">
+
+    <style>
+        .signup-container {
+            display: flex;
+            flex-grow: 1; 
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: center;
+        }
+
+        .signup-image {
+            flex: 2;
+            background-color: #e0e0e0; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px 0 0 8px;
+            overflow: hidden;
+            height: 500px;
+        }
+
+        .signup-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .signup-form-card {
+            flex: 1;
+            background: #f0f0f0;
+            padding: 40px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .signup-form-card h2 {
+            color: #333;
+        }
+
+        .input-group input {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 12px;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-signup-dark {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-signup-dark:hover {
+            background-color: #555;
+        }
+
+        .google-signup-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            color: #333;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            padding: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .google-signup-btn img {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+        }
+
+        .login-link-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Header and logo styling */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #4a5c9a;
+            padding: 15px 30px;
+            color: white;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-logo img {
+            width: 60px;      /* Adjust as needed */
+            height: auto;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .signup-image {
+                display: none;
+            }
+
+            .signup-form-card {
+                border-radius: 8px;
+                flex: 1;
+            }
+
+            /* Responsive logo size */
+            .header-logo img {
+                width: 45px;
+            }
+        }
+
+        /* Footer styling */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4a5c9a;
+            color: white;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+    .footer-links a {
+            color: #dcdcdc;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 1.5rem;">&larr;</a>
+        <h1 class="header-title" style="flex-grow: 1; text-align: center;">Sign Up</h1>
+        <div class="header-logo">
+            <img src="assets/SCE-LOGO.jpg" alt="Samtse College of Education Logo">
+        </div>
+    </header>
+
+    <main class="signup-container">
+        <div class="signup-image">
+            <img src="assets/typing.jpeg" alt="Person typing on a laptop">
+        </div>
+        
+        <div class="signup-form-card">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <div class="input-group">
+                    <input type="text" id="signup-full-name" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="signup-email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required>
+                </div>
+                
+                <button type="submit" class="btn-signup-dark">Sign Up</button>
+            </form>
+            
+            <p style="text-align: center; margin: 10px 0;">OR</p>
+            
+            <button id="google-signup-btn" class="google-signup-btn" type="button">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google logo">
+                Sign up with Google
+            </button>
+
+            <p class="login-link-text">
+                Already have an account? <a href="index.html" style="color: #4a5c9a; font-weight: bold;">Log in</a>
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <span>Academic • Sports & Games • Cultural</span>
+        </div>
+        <p>©2025 Samtse College of Education</p>
+        <div class="contact-info">
+            <p>Contact us at: +975 77568876 | +975 17793887</p>
+            <p>Email: cte@admin@sce.rub.edu.bt</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
