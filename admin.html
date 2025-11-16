@@ -1,192 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SCE Event Administration - Local Storage</title>
-<link rel="icon" href="assets/logo.png" type="image/x-icon">
-<style>
-    /* Minimal styles for readability since you didn't provide style.css */
-    body { font-family: sans-serif; margin: 0; background-color: #f4f4f4; }
-    .header { padding: 15px; display: flex; justify-content: space-between; align-items: center; background-color: #333; color: white;}
-    .admin-page-container { max-width: 800px; margin: 30px auto; padding: 20px; }
-    .admin-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .tab-buttons button { padding: 10px 15px; margin-right: 10px; border: 1px solid #ccc; background: #eee; cursor: pointer; }
-    .tab-buttons button.active { background-color: #ffb907; color: #333; border-color: #ffb907; }
-    #add-event-form input, #add-event-form textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; box-sizing: border-box; }
-    .datetime-group { display: flex; gap: 10px; }
-    .datetime-group input { flex: 1; }
-    .btn-add-event { background-color: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; }
-    #manage-events-list { list-style: none; padding: 0; }
-    #manage-events-list li { background: #e9ecef; margin-bottom: 8px; padding: 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
-    #manage-events-list strong { color: #007bff; }
-    #manage-events-list button { background-color: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
-    .footer { text-align: center; padding: 20px; background-color: #333; color: white; }
-    .footer a { color: #ffb907; text-decoration: none; margin: 0 10px; }
-</style>
-</head>
-<body>
-<header class="header" style="background-color: #333; color: white;">
-    <h1 class="header-title">SCE Events</h1>
-    <nav style="display: flex; align-items: center;">
-      <span style="margin-right: 20px;">Admin (Local Storage)</span>
-      <a href="select_role.html" style="color: #ffb907; text-decoration: none;">Change User</a>
-    </nav>
-</header>
-
-<main class="admin-page-container">
-    <h1>SCE Event Administration</h1>
-    <p>Add, cancel, and delete events for Samtse College of Education.</p>
-
-    <div class="admin-card">
-      <h3>Add New Event</h3>
-      <form id="add-event-form">
-        <div class="tab-buttons">
-          <button type="button" class="tab-button active" data-category="Academic">Academic</button>
-          <button type="button" class="tab-button" data-category="Sports & Games">Sports & Games</button>
-          <button type="button" class="tab-button" data-category="Cultural">Cultural</button>
-        </div>
-        <input type="hidden" id="event-category" value="Academic">
-
-        <input type="text" id="event-title" placeholder="Title" required>
-        <div class="datetime-group">
-          <input type="date" id="event-date" required>
-          <input type="time" id="event-time" placeholder="Time">
-        </div>
-        <input type="text" id="event-venue" placeholder="Venue" required>
-        <textarea id="event-description" placeholder="Description" rows="3" required></textarea>
-
-        <button type="submit" class="btn-add-event">Add Event</button>
-      </form>
-    </div>
-
-    <div class="admin-card">
-      <h3>Manage Events</h3>
-      <p id="no-events-message">No events yet. Add your first event using the form.</p>
-      <ul id="manage-events-list"></ul>
-    </div>
-</main>
-
-<footer class="footer">
-    <div class="footer-links">
-      <a href="about.html">About us</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <span>Academic • Sports & Games • Cultural</span>
-    </div>
-    <p>© 2025 Samtse College of Education</p>
-</footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // ⚠️ IMPORTANT: Must match the key used in script.js
-    const EVENT_STORAGE_KEY = 'collegeEvents'; 
-    const addEventForm = document.getElementById('add-event-form');
-    const categoryButtons = document.querySelectorAll('.tab-button');
-    const eventCategoryInput = document.getElementById('event-category');
-    const manageEventsList = document.getElementById('manage-events-list');
-    const noEventsMessage = document.getElementById('no-events-message');
-
-    // --- Local Storage Functions (Simulating the database) ---
-
-    function getEvents() {
-        const eventsJson = localStorage.getItem(EVENT_STORAGE_KEY);
-        return eventsJson ? JSON.parse(eventsJson) : [];
-    }
-
-    function saveEvents(eventsArray) {
-        localStorage.setItem(EVENT_STORAGE_KEY, JSON.stringify(eventsArray));
-    }
-    
-    // Simple auto-incrementing ID based on existing events
-    let nextId = getEvents().reduce((max, event) => Math.max(max, event._id || 0), 0) + 1;
-
-
-    // --- UI/UX Logic ---
-    categoryButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        categoryButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        eventCategoryInput.value = button.dataset.category;
-      });
-    });
-
-    // --- Load Events Function (Local Storage Read) ---
-    function loadEvents() {
-        const allEvents = getEvents();
-
-        // Sort events by date
-        allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        manageEventsList.innerHTML = '';
-        if (allEvents.length === 0) {
-            noEventsMessage.style.display = 'block';
-            return;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SCE Digital Notice Board</title>
+    <link rel="icon" href="assets/logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f7f8fc;
         }
-        noEventsMessage.style.display = 'none';
 
-        allEvents.forEach(event => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <strong>${event.title}</strong> (${event.category}) - ${event.date} ${event.time ? event.time : ''} @ ${event.venue}
-                <button onclick="deleteEvent(${event._id})">Delete</button>
-            `;
-            manageEventsList.appendChild(li);
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #4a5c9a;
+            padding: 15px 30px;
+            color: white;
+        }
+
+        .header-logo img {
+            width: 60px;
+            border-radius: 4px;
+        }
+
+        .admin-container {
+            padding: 30px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background: #4a5c9a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3a4c8a;
+        }
+
+        .btn-logout {
+            background: #e74c3c;
+            color: white;
+            float: right;
+        }
+
+        .btn-logout:hover {
+            background: #c0392b;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #4a5c9a;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #4a5c9a;
+            color: white;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #dcdcdc;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        #notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4a5c9a;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>Admin Dashboard</h1>
+        <div>
+            <button class="btn btn-logout" id="logoutBtn">Logout</button>
+            <div class="header-logo"><img src="assets/SCE-LOGO.jpg" alt="SCE Logo"></div>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <h2>Add New Event</h2>
+        <div class="event-form">
+            <div class="form-group">
+                <input type="text" id="event-title" placeholder="Event Title" required>
+            </div>
+            <div class="form-group">
+                <input type="date" id="event-date" required>
+            </div>
+            <div class="form-group">
+                <input type="time" id="event-time">
+            </div>
+            <div class="form-group">
+                <input type="text" id="event-venue" placeholder="Venue" required>
+            </div>
+            <div class="form-group">
+                <select id="event-type" required>
+                    <option value="">Select Event Type</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Sports & Games">Sports & Games</option>
+                    <option value="Cultural">Cultural</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea id="event-description" rows="3" placeholder="Event Description" required></textarea>
+            </div>
+            <button class="btn btn-primary" id="addEventBtn">Add Event</button>
+        </div>
+
+        <h2>All Events</h2>
+        <table id="eventsTable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Venue</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+
+    <div id="notification"></div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <span>Academic • Sports & Games • Cultural</span>
+        </div>
+        <p>©2025 Samtse College of Education</p>
+    </footer>
+
+    <script>
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert("Access denied. Admins only.");
+            window.location.href = "index.html";
+        }
+
+        const eventsTable = document.getElementById('eventsTable').querySelector('tbody');
+        const EVENT_KEY = 'collegeEvents';
+
+        function showNotification(message, duration = 3000) {
+            const notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.style.display = 'block';
+            setTimeout(() => { notif.style.display = 'none'; }, duration);
+        }
+
+        function loadEvents() {
+            let events = JSON.parse(localStorage.getItem(EVENT_KEY) || '[]');
+            eventsTable.innerHTML = '';
+            events.forEach((event, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${event.title}</td>
+                    <td>${event.date}</td>
+                    <td>${event.time || '-'}</td>
+                    <td>${event.venue}</td>
+                    <td>${event.type}</td>
+                    <td>${event.description}</td>
+                    <td><button onclick="deleteEvent(${index})" class="btn" style="background:#e74c3c;color:white;border-radius:4px;">Delete</button></td>
+                `;
+                eventsTable.appendChild(row);
+            });
+        }
+
+        function deleteEvent(index) {
+            let events = JSON.parse(localStorage.getItem(EVENT_KEY) || '[]');
+            events.splice(index, 1);
+            localStorage.setItem(EVENT_KEY, JSON.stringify(events));
+            loadEvents();
+            showNotification("🗑️ Event deleted successfully!");
+        }
+
+        document.getElementById('addEventBtn').addEventListener('click', () => {
+            const title = document.getElementById('event-title').value.trim();
+            const date = document.getElementById('event-date').value;
+            const time = document.getElementById('event-time').value;
+            const venue = document.getElementById('event-venue').value.trim();
+            const type = document.getElementById('event-type').value;
+            const description = document.getElementById('event-description').value.trim();
+
+            if (!title || !date || !venue || !type || !description) { showNotification("⚠️ Please fill all fields!"); return; }
+
+            let events = JSON.parse(localStorage.getItem(EVENT_KEY) || '[]');
+            const newEvent = { _id: Date.now(), title, date, time, venue, type, description };
+            events.push(newEvent);
+            localStorage.setItem(EVENT_KEY, JSON.stringify(events));
+
+            document.getElementById('event-title').value = '';
+            document.getElementById('event-date').value = '';
+            document.getElementById('event-time').value = '';
+            document.getElementById('event-venue').value = '';
+            document.getElementById('event-type').value = '';
+            document.getElementById('event-description').value = '';
+
+            loadEvents();
+            showNotification("✅ Event added successfully!");
         });
-    }
 
-    // --- Add Event Submission (Local Storage Write) ---
-    addEventForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const newEvent = {
-        _id: nextId++, // Assign local, sequential ID
-        title: document.getElementById('event-title').value.trim(),
-        date: document.getElementById('event-date').value,
-        time: document.getElementById('event-time').value,
-        venue: document.getElementById('event-venue').value.trim(),
-        description: document.getElementById('event-description').value.trim(),
-        category: eventCategoryInput.value
-      };
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'select_role.html';
+        });
 
-      const events = getEvents();
-      events.push(newEvent);
-      saveEvents(events);
-
-      // Reset the form and reload the list
-      addEventForm.reset();
-      document.querySelector('.tab-button.active').click(); 
-      loadEvents();
-    });
-
-    // --- Delete Event Function (Local Storage Update) ---
-    window.deleteEvent = function(id) {
-        if (!confirm('Are you sure you want to delete this event?')) return;
-
-        let events = getEvents();
-        
-        // Filter out the event by its unique _id
-        events = events.filter(event => event._id !== id); 
-        
-        saveEvents(events); // Save the filtered array
-        loadEvents(); // Reload the list
-    };
-
-    // Load events on page initialization
-    loadEvents();
-});
-</script>
-<footer class="footer">
-                 <div class="footer-links">
-                        <a href="about.html">About us</a>
-                         <a href="privacy.html">Privacy Policy</a>
-                        <span>Academic • Sports & Games • Cultural</span>
-                         </div>
-                 <p>©2025 Samtse College of Education</p>
-                 <div class="contact-info">
-                        <p>Contact us at: +975 77568876 | +975 17793887</p>
-                         <p>Email: cte@admin@sce.rub.edu.bt</p>
-                         </div>
-                </footer>
-<script src="js/script.js"></script>
+        loadEvents();
+    </script>
 </body>
+
 </html>

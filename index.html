@@ -2,120 +2,81 @@
 <html lang="en">
 
 <head>
-       
     <meta charset="UTF-8">
-       
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SCE Digital Notice Board - Login</title>
-       
+    <title>SCE Digital Notice Board - Login</title>
     <link rel="icon" href="assets/logo.png" type="image/x-icon">
-
-        <style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #f7f8fc;
+            background: #f7f8fc;
         }
 
-        /* Header styling */
         .header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background-color: #4a5c9a;
-            color: white;
+            align-items: center;
+            background: #4a5c9a;
             padding: 15px 30px;
-        }
-
-        .header-title {
-            flex-grow: 1;
-            text-align: center;
-            font-size: 1.7rem;
-            font-weight: bold;
+            color: white;
         }
 
         .header-logo img {
             width: 60px;
-            height: auto;
             border-radius: 4px;
         }
 
-        /* Main login layout */
         .login-container {
             display: flex;
             justify-content: center;
-            align-items: stretch;
+            align-items: center;
             min-height: 80vh;
-            background-color: white;
+            padding: 20px;
         }
 
-        /* Left image section */
-        .login-image {
-            flex: 1;
-        }
-
-        .login-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 0;
-        }
-
-        /* Right login form section */
         .login-card {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 60px;
-            background-color: #f1f3fa;
+            background: #f1f3fa;
+            padding: 40px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .login-card h2 {
             text-align: center;
-            font-size: 2rem;
-            color: #333;
             margin-bottom: 30px;
         }
 
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .input-group label {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
+        .input-group {
+            margin-bottom: 20px;
         }
 
         .input-group input {
+            width: 100%;
             padding: 10px;
             font-size: 1rem;
-            width: 100%;
             border: 1px solid #ccc;
             border-radius: 6px;
         }
 
         .btn-primary {
+            width: 100%;
             padding: 12px;
-            font-size: 1rem;
-            background-color: #4a5c9a;
+            background: #4a5c9a;
             color: white;
             border: none;
             border-radius: 6px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
         .btn-primary:hover {
-            background-color: #3a4c8a;
+            background: #3a4c8a;
         }
 
         .signup-text {
             text-align: center;
-            font-size: 1rem;
             margin-top: 15px;
         }
 
@@ -129,19 +90,19 @@
             text-decoration: underline;
         }
 
-        /* Footer */
         .footer {
             text-align: center;
             padding: 20px;
-            background-color: #4a5c9a;
+            background: #4a5c9a;
             color: white;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
             margin-bottom: 10px;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
@@ -152,78 +113,56 @@
         .footer-links a:hover {
             text-decoration: underline;
         }
-
-        .contact-info p {
-            margin: 5px 0;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive design */
-        @media (max-width: 900px) {
-            .login-container {
-                flex-direction: column;
-            }
-
-            .login-image img {
-                height: 250px;
-            }
-
-            .login-card {
-                padding: 40px;
-            }
-        }
     </style>
 </head>
 
 <body>
-     <header class="header">
-         <h1 class="header-title">SCE Digital Notice Board</h1>
-         <div class="header-logo">
-           <img src="assets/SCE-LOGO.jpg" alt="Samtse College of Education Logo">
-            </div>
-         </header>
+    <header class="header">
+        <h1>SCE Digital Notice Board</h1>
+        <div class="header-logo"><img src="assets/SCE-LOGO.jpg" alt="SCE Logo"></div>
+    </header>
 
-     <main class="login-container">
-         <div class="login-image">
-             <img src="assets/scehsll.jpg" alt="College event gathering">
-             </div>
-         <div class="login-card">
-             <h2>WELCOME</h2>
-            <form class="login-form">
-               <div class="input-group">
-                    <label for="email">E-mail Address</label>
-                     <input type="email" id="email" name="email" placeholder="name@sce.edu.bt" required>
-                     </div>
-                 <div class="input-group">
-                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="********" required>
-                     </div>
-                
+    <main class="login-container">
+        <div class="login-card">
+            <h2>WELCOME</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="name@sce.edu.bt" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="********" required>
+                </div>
                 <button type="submit" class="btn-primary">Login</button>
-                
             </form>
-            
-             <p class="signup-text">
-                 Not a Member yet?
-                 <a href="signup.html" class="btn-secondary">Sign-up</a>
-                 </p>
-            </div>
-         </main>
+            <p class="signup-text">Not a Member yet? <a href="signup.html">Sign-up</a></p>
+        </div>
+    </main>
 
-     <footer class="footer">
+    <footer class="footer">
         <div class="footer-links">
-             <a href="about.html">About us</a>
-             <a href="privacy.html">Privacy Policy</a>
-             <span>Academic • Sports & Games • Cultural</span>
-             </div>
-         <p>©2025 Samtse College of Education</p>
-         <div class="contact-info">
-             <p>Contact us at: +975 77568876 | +975 17793887</p>
-             <p>Email: cte@admin@sce.rub.edu.bt</p>
-             </div>
-         </footer>
-    
-    <script src="js/script.js"></script>
+            <a href="about.html">About us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <span>Academic • Sports & Games • Cultural</span>
+        </div>
+        <p>©2025 Samtse College of Education</p>
+    </footer>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            let users = JSON.parse(localStorage.getItem('sceUsers') || '[]');
+            let user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.href = "select_role.html";
+            } else {
+                alert("Invalid credentials!");
+            }
+        });
+    </script>
 </body>
 
 </html>

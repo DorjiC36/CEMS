@@ -1,173 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Registration Form - SCE</title>
   <link rel="icon" href="assets/logo.png" type="image/x-icon">
   <style>
-    /* ... (Your CSS remains the same) ... */
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #f5f7fa;
       margin: 0;
-      padding: 0;
     }
+
     header {
       background-color: #5c75d4;
       color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    header a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
+
     form {
       max-width: 500px;
       margin: 40px auto;
       background: white;
       padding: 25px;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-    input, select, button {
+
+    input,
+    button {
       width: 100%;
-      margin-bottom: 15px;
       padding: 10px;
-      border: 1px solid #ccc;
+      margin-bottom: 15px;
       border-radius: 5px;
-      font-family: inherit;
+      border: 1px solid #ccc;
     }
-    /* Style for the pre-filled event name field */
+
     #eventName {
-        background-color: #f0f0f0; 
-        font-weight: bold;
-        color: #333;
+      background-color: #eee;
+      font-weight: bold;
     }
+
     button {
       background-color: #5c75d4;
       color: white;
       border: none;
       cursor: pointer;
     }
-    button:hover { background-color: #4a61b1; }
   </style>
 </head>
+
 <body>
+
   <header>
-    <a href="register_events.html" style="color:white;font-size:1.8rem;font-weight:bold;">&larr;</a>
+    <a href="register_events.html" style="color:white;font-weight:bold;font-size:1.8rem;">&larr;</a>
     <h1>Register for Event</h1>
-    <img src="assets/SCE-LOGO.jpg" alt="SCE Logo" height="45">
+    <img src="assets/SCE-LOGO.jpg" height="45">
   </header>
 
   <form id="registrationForm">
     <input type="text" id="studentName" placeholder="Student Name" required>
     <input type="text" id="studentId" placeholder="Student ID" required>
     <input type="text" id="course" placeholder="Course" required>
-    <input type="text" id="eventName" placeholder="Event Name" readonly required> 
+    <input type="text" id="eventName" readonly required>
     <button type="submit">Submit Registration</button>
   </form>
 
-  <script src="js/script.js"></script> 
-  
   <script>
-    // Ensure getEventsFromLocalStorage is defined locally or available globally if needed
-    function getEventsFromLocalStorage() {
-        const eventsJson = localStorage.getItem(window.EVENT_KEY);
-        return eventsJson ? JSON.parse(eventsJson) : [];
-    }
-    
-    // --- Pre-fill Event Name ---
-    const selectedEventId = parseInt(localStorage.getItem('selectedEventId'));
-    const allEvents = getEventsFromLocalStorage();
-    const selectedEvent = allEvents.find(event => event._id === selectedEventId);
-    
-    const eventNameInput = document.getElementById('eventName');
+    const EVENT_KEY = 'collegeEvents';
+    const REG_KEY = 'registeredEvents';
+    const selectedID = parseInt(localStorage.getItem('selectedEventId'));
+    const events = JSON.parse(localStorage.getItem(EVENT_KEY) || '[]');
+    const selectedEvent = events.find(e => e._id === selectedID);
 
-    if (selectedEvent) {
-        eventNameInput.value = `${selectedEvent.title} (${selectedEvent.category})`;
-    } else {
-        eventNameInput.value = 'Error: Event not found';
-        alert('Error: Please select an event from the registration page.');
-        return;
-    }
+    if (!selectedEvent) { alert("Error: Event not found. Return to events page."); document.getElementById("eventName").value = "Event not found"; }
+    else { document.getElementById("eventName").value = `${selectedEvent.title} (${selectedEvent.type})`; }
 
-
-    // --- Form Submission Logic (UPDATED FOR NOTIFICATIONS) ---
-    document.getElementById('registrationForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Check if the user is logged in to get their email
-        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-        const userEmail = loggedInUser ? loggedInUser.email : 'guest@sce.edu.bt'; // Default if somehow missed
-
-        const studentName = document.getElementById('studentName').value;
-        const studentId = document.getElementById('studentId').value;
-        
-        const registration = {
-            name: studentName,
-            id: studentId,
-            course: document.getElementById('course').value,
-            eventId: selectedEventId,
-            eventTitle: selectedEvent.title,
-            eventDate: selectedEvent.date,
-            eventTime: selectedEvent.time,
-            registrationDate: new Date().toISOString()
-        };
-
-        // 1. Load, Add, and Save registration
-        const registered = JSON.parse(localStorage.getItem(window.REGISTRATION_KEY) || '[]');
-        registered.push(registration);
-        localStorage.setItem(window.REGISTRATION_KEY, JSON.stringify(registered));
-
-        // 2. 📧 Call global email simulation function (from script.js)
-        if (window.sendConfirmationEmail) {
-            window.sendConfirmationEmail(
-                userEmail,
-                `✅ Registration Confirmed: ${selectedEvent.title}`,
-                `Dear ${studentName},\n\nYour registration (Student ID: ${studentId}) for the event "${selectedEvent.title}" on ${selectedEvent.date} is confirmed! Please attend on time. Check your browser console for the email log.`
-            );
-        }
-        
-        // 3. 🗓️ Call global calendar simulation function (from script.js)
-        if (window.addEventToCalendar) {
-            window.addEventToCalendar(
-                selectedEvent.title,
-                selectedEvent.date,
-                selectedEvent.time || 'All Day',
-                userEmail
-            );
-        }
-        
-        // 4. 🔔 Display web notification
-        if (window.displayWebNotification) {
-            window.displayWebNotification(
-                "Registration Confirmed!",
-                `You are registered for ${selectedEvent.title} on ${selectedEvent.date}.`
-            );
-        }
-
-        alert('Registration successful! (Check your browser console for Gmail/Calendar log)');
-        window.location.href = 'registered_events.html'; 
+    document.getElementById("registrationForm").addEventListener("submit", e => {
+      e.preventDefault();
+      if (!selectedEvent) { alert("Cannot register."); return; }
+      const registration = {
+        name: document.getElementById("studentName").value,
+        id: document.getElementById("studentId").value,
+        course: document.getElementById("course").value,
+        eventId: selectedID,
+        eventTitle: selectedEvent.title,
+        eventType: selectedEvent.type,
+        eventDate: selectedEvent.date,
+        eventVenue: selectedEvent.venue,
+        registrationDate: new Date().toISOString()
+      };
+      const existing = JSON.parse(localStorage.getItem(REG_KEY) || '[]');
+      existing.push(registration);
+      localStorage.setItem(REG_KEY, JSON.stringify(existing));
+      alert("Registration successful!");
+      window.location.href = 'registered_events.html';
     });
   </script>
-  <footer class="footer">
-                 <div class="footer-links">
-                        <a href="about.html">About us</a>
-                         <a href="privacy.html">Privacy Policy</a>
-                        <span>Academic • Sports & Games • Cultural</span>
-                         </div>
-                 <p>©2025 Samtse College of Education</p>
-                 <div class="contact-info">
-                        <p>Contact us at: +975 77568876 | +975 17793887</p>
-                         <p>Email: cte@admin@sce.rub.edu.bt</p>
-                         </div>
-                </footer>
-  <script src="js/script.js"></script>
+
 </body>
+
 </html>

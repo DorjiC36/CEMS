@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,11 +65,16 @@
       align-items: center;
       gap: 20px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     }
 
     .menu-item:hover {
       transform: translateX(8px);
+      background-color: #e4e9f7;
     }
 
     .menu-item img.icon {
@@ -107,11 +113,32 @@
     /* ===== FOOTER ===== */
     footer {
       text-align: center;
-      padding: 15px;
+      padding: 20px;
       font-size: 0.9rem;
       color: #555;
       border-top: 1px solid #ddd;
       background-color: #f9f9f9;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .footer-links a {
+      color: #5c75d4;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-info p {
+      margin: 2px 0;
     }
 
     @media (max-width: 768px) {
@@ -130,9 +157,9 @@
     }
   </style>
 </head>
+
 <body>
   <header>
-
     <a href="select_role.html">&larr;</a>
     <h1>Main Menu</h1>
     <img src="assets/SCE-LOGO.jpg" alt="SCE Logo">
@@ -155,24 +182,26 @@
     </div>
 
     <div class="menu-images">
-      <img src="assets/academic.jpeg" alt="Workshop">
-      <img src="assets/culture.jpeg" alt="Cultural Program">
+      <img src="assets/academic.jpeg" alt="Academic Event">
+      <img src="assets/culture.jpeg" alt="Cultural Event">
       <img src="assets/sports.jpeg" alt="Sports Event">
     </div>
   </main>
 
-  <footer class="footer">
-                 <div class="footer-links">
-                        <a href="about.html">About us</a>
-                         <a href="privacy.html">Privacy Policy</a>
-                        <span>Academic • Sports & Games • Cultural</span>
-                         </div>
-                 <p>©2025 Samtse College of Education</p>
-                 <div class="contact-info">
-                        <p>Contact us at: +975 77568876 | +975 17793887</p>
-                         <p>Email: cte@admin@sce.rub.edu.bt</p>
-                         </div>
-                </footer>
-        <script src="js/script.js"></script>
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <span>Academic • Sports & Games • Cultural</span>
+    </div>
+    <p>©2025 Samtse College of Education</p>
+    <div class="contact-info">
+      <p>Contact us at: +975 77568876 | +975 17793887</p>
+      <p>Email: cte@admin.sce.rub.edu.bt</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
 </body>
+
 </html>

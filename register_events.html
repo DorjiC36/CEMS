@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,78 +9,76 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fa;
+      background: #f5f7fa;
       margin: 0;
-      padding: 0;
     }
+
     header {
-      background-color: #5c75d4;
+      background: #5c75d4;
       color: white;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 15px 30px;
     }
-    header a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
+
     main {
       max-width: 800px;
       margin: 40px auto;
       background: white;
       border-radius: 10px;
       padding: 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
+
     h2 {
-      background-color: #5c75d4;
+      background: #5c75d4;
       color: white;
       padding: 12px;
       border-radius: 6px;
+      margin-bottom: 20px;
     }
+
     .event-card {
       padding: 15px;
       border-bottom: 1px solid #eee;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
+
     .event-card:last-child {
-        border-bottom: none;
+      border-bottom: none;
     }
-    .event-details {
-        flex-grow: 1;
-    }
-    .event-details h3 {
-        margin: 0 0 5px 0;
-        color: #5c75d4;
-    }
-    .event-details p {
-        margin: 0;
-        font-size: 0.9rem;
-        color: #666;
-    }
+
     button {
-      background-color: #5c75d4;
+      background: #5c75d4;
       color: white;
-      border: none;
       padding: 8px 15px;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-left: 20px;
     }
-    button:hover { background-color: #4a61b1; }
-    .no-events { text-align: center; color: #777; margin-top: 40px; }
+
+    .event-info h3 {
+      margin: 0 0 5px 0;
+      font-size: 1.1rem;
+    }
+
+    .event-info p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <a href="main_menu.html">&larr;</a>
-    <h1>Registration</h1>
-    <img src="assets/SCE-LOGO.jpg" alt="SCE Logo" height="45">
+    <h1>Register for Events</h1>
+    <img src="assets/SCE-LOGO.jpg" height="45">
   </header>
 
   <main>
@@ -88,64 +87,36 @@
   </main>
 
   <script>
-    // ⚠️ IMPORTANT: Use the correct key from admin.html and script.js
-    const EVENT_STORAGE_KEY = 'collegeEvents'; 
+    const STORAGE_KEY = 'collegeEvents';
     const listDiv = document.getElementById('eventsList');
 
-    function getEventsFromLocalStorage() {
-        const eventsJson = localStorage.getItem(EVENT_STORAGE_KEY);
-        return eventsJson ? JSON.parse(eventsJson) : [];
-    }
+    function assignIDs(events) { events.forEach((e, i) => { if (!e._id) e._id = Date.now() + i; }); return events; }
+    function getEvents() { let events = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); events = assignIDs(events); localStorage.setItem(STORAGE_KEY, JSON.stringify(events)); return events; }
 
     function renderEvents() {
-        const events = getEventsFromLocalStorage();
-        listDiv.innerHTML = ''; 
-
-        if (events.length === 0) {
-            listDiv.innerHTML = '<p class="no-events">No events added yet by the administrator.</p>';
-            return;
-        }
-
-        // Sort events by date
-        events.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        events.forEach(event => {
-            const div = document.createElement('div');
-            div.className = 'event-card';
-            
-            // Display event details
-            div.innerHTML = `
-                <div class="event-details">
-                    <h3>${event.title} (${event.category})</h3>
-                    <p>📅 ${event.date} at ${event.time || 'N/A'} | 📍 ${event.venue}</p>
-                </div>
-                <button onclick="registerEvent(${event._id})">Register</button>
-            `;
-            listDiv.appendChild(div);
-        });
+      const events = getEvents();
+      listDiv.innerHTML = '';
+      if (events.length === 0) { listDiv.innerHTML = '<p>No events added yet.</p>'; return; }
+      events.sort((a, b) => new Date(a.date) - new Date(b.date));
+      events.forEach(event => {
+        const div = document.createElement('div');
+        div.className = 'event-card';
+        div.innerHTML = `
+        <div class="event-info">
+          <h3>${event.title} (${event.type})</h3>
+          <p>📅 ${event.date} ${event.time ? 'at ' + event.time : ''} | 📍 ${event.venue}</p>
+          <p>${event.description || ''}</p>
+        </div>
+        <button onclick="registerEvent(${event._id})">Register</button>
+        `;
+        listDiv.appendChild(div);
+      });
     }
 
-    // Pass the unique ID to the registration form
-    window.registerEvent = function(eventId) {
-        // Save the ID of the selected event to Local Storage
-        localStorage.setItem('selectedEventId', eventId); 
-        window.location.href = 'registration_form.html';
-    };
+    window.registerEvent = function (id) { localStorage.setItem('selectedEventId', id); window.location.href = 'registration_form.html'; }
 
     renderEvents();
   </script>
-  <footer class="footer">
-                 <div class="footer-links">
-                        <a href="about.html">About us</a>
-                         <a href="privacy.html">Privacy Policy</a>
-                        <span>Academic • Sports & Games • Cultural</span>
-                         </div>
-                 <p>©2025 Samtse College of Education</p>
-                 <div class="contact-info">
-                        <p>Contact us at: +975 77568876 | +975 17793887</p>
-                         <p>Email: cte@admin@sce.rub.edu.bt</p>
-                         </div>
-                </footer>
-    <script src="js/script.js"></script>
 </body>
+
 </html>
